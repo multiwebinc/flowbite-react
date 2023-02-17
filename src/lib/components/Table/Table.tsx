@@ -7,10 +7,12 @@ import { TableContext, TableContextType } from './TableContext';
 import { TableHead } from './TableHead';
 import { TableHeadCell } from './TableHeadCell';
 import { TableRow } from './TableRow';
+import './style.css';
 
 export interface FlowbiteTableTheme {
   base: string;
   wrapper: string;
+  shadow: string;
   head: {
     base: string;
     cell: {
@@ -32,13 +34,14 @@ const TableComponent: FC<TableProps> = ({ children, striped, hoverable, classNam
   const theme = useTheme().theme.table;
 
   return (
-    <div data-testid="table-element" className={classNames(theme.wrapper)}>
-      <TableContext.Provider value={{ striped, hoverable }}>
+    <TableContext.Provider value={{ striped, hoverable }}>
+      <div data-testid="table-element" className={classNames(theme.wrapper, className)}>
+        <div className={classNames(theme.shadow, className)}></div>
         <table className={classNames(theme.base, className)} {...props}>
           {children}
         </table>
-      </TableContext.Provider>
-    </div>
+      </div>
+    </TableContext.Provider>
   );
 };
 
